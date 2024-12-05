@@ -1,10 +1,10 @@
 export default class Todo{
-    constructor(id, title, description, duedate, priority, projectID)
+    constructor(id, title, description, dueDate, priority, projectID)
     {
         this.id=id;
         this.title=title;
         this.description=description;
-        this.duedate=duedate;
+        this.dueDate=dueDate;
         this.priority=priority;
         this.projectID=projectID;
     }

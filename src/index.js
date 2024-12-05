@@ -6,27 +6,39 @@ console.log("Hello.Webpack");
 const sidebar = document.getElementById('sidebar');
 const content = document.getElementById('content');
 
-const projects = ['Default Project', 'Work', 'Personal'];
-projects.forEach(project => {
-    const projectDiv = document.createElement('div');
-    projectDiv.textContent = project;
-    projectDiv.classList.add('project-item');
-    sidebar.appendChild(projectDiv);
-});
+document.addEventListener('DOMContentLoaded', ()=>{
+    const API_URL = 'https://6751ba8ed1983b9597b407f9.mockapi.io/api/v1';
 
-const todos = [
-    { title: 'Buy groceries', priority: 'High', dueDate: '2024-12-05' },
-    { title: 'Complete project', priority: 'Medium', dueDate: '2024-12-10' },
-];
-todos.forEach(todo => {
-    const todoDiv = document.createElement('div');
-    todoDiv.textContent = `${todo.title} - ${todo.priority} (${todo.dueDate})`;
-    content.appendChild(todoDiv);
-});
+    const fetchProjects = async() =>{
+        const response = await fetch('${API_URL}/Project');
+        const data = await response.json();
+        return data.map(project = new Project(project.id, project.name));
+       
+    };
 
-const Project1 = new Project(1,'Work');
-const Todo1 = new Todo(234,'CleanDesk','Organize everything on the desk','2024-12-5','high',1);
+    const fetchTodos = async() =>{
+        const response=await fetch('${API_URL}/Todo');
+        const data = await response.json();
+        return data.map(todo = new Todo(
+            todo.id,
+            todo.title,
+            todo.description,
+            todo.dueDate,
+            todo.priority,
+            todo.projectID
+        ));
+    };
 
-console.log(Project1);
+    const renderTodos = (todos) =>{
+        const content = getElementById('content');
+        content.innerHTML = '';
 
+        todos.forEach(todo => {
+            const todoDiv = document.createElement('div');
+            todoDiv.classList.add('todo-item');
+            todoDiv.textContent = `${todo.title} - ${todo.priority} (${todo.dueDate})`;
+            content.appendChild(todoDiv);
+        });
+    }
+})
 
