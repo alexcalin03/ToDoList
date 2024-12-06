@@ -1,44 +1,22 @@
 import './styles.css';
-import Project from './models/Project';
-import Todo from './models/ToDo';
+import { fetchProjects, renderProjects } from './ManageProjects.js';
+import { fetchTodos, renderTodos } from './ManageTodos.js';
 console.log("Hello.Webpack");
 
-const sidebar = document.getElementById('sidebar');
-const content = document.getElementById('content');
 
-document.addEventListener('DOMContentLoaded', ()=>{
-    const API_URL = 'https://6751ba8ed1983b9597b407f9.mockapi.io/api/v1';
 
-    const fetchProjects = async() =>{
-        const response = await fetch('${API_URL}/Project');
-        const data = await response.json();
-        return data.map(project = new Project(project.id, project.name));
-       
-    };
+document.addEventListener('DOMContentLoaded', async ()=>{
+    const API_BASE = 'https://6751ba8ed1983b9597b407f9.mockapi.io/api/v1';
+try{
+    const projects = await fetchProjects(API_BASE);
+    const todos = await fetchTodos(API_BASE);
+    renderProjects(projects, todos, renderTodos);
+    renderTodos(todos);
+}catch (error){console.error('Error initializing app', error);
 
-    const fetchTodos = async() =>{
-        const response=await fetch('${API_URL}/Todo');
-        const data = await response.json();
-        return data.map(todo = new Todo(
-            todo.id,
-            todo.title,
-            todo.description,
-            todo.dueDate,
-            todo.priority,
-            todo.projectID
-        ));
-    };
+}
 
-    const renderTodos = (todos) =>{
-        const content = getElementById('content');
-        content.innerHTML = '';
+   
+}
 
-        todos.forEach(todo => {
-            const todoDiv = document.createElement('div');
-            todoDiv.classList.add('todo-item');
-            todoDiv.textContent = `${todo.title} - ${todo.priority} (${todo.dueDate})`;
-            content.appendChild(todoDiv);
-        });
-    }
-})
-
+)
