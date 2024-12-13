@@ -9,28 +9,43 @@
    
 };
 
-export const renderProjects=(projects, todos, renderTodosCallback)=>
-    { // imparte functia intr o functie mama -> 2 copii: renderDefault, renderRestu
-       const sidebar = document.getElementById('sidebar');
-       sidebar.innerHTML='';
+export const renderProjects = (projects, todos, renderTodosCallback) => {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.innerHTML = '';
 
-       const defaultProject = document.createElement('div');
-       defaultProject.setAttribute('data-text', 'All todos');
-       defaultProject.classList.add('project-item');
-       defaultProject.onclick = () => renderTodosCallback(todos);
-       sidebar.appendChild(defaultProject);
+  const removeActiveClass = () => {
+      const allProjectItems = sidebar.querySelectorAll('.project-item');
+      allProjectItems.forEach(item => item.classList.remove('active'));
+  };
 
-       projects.forEach(project => 
-        {
-          const projectDiv = document.createElement('div');
-          projectDiv.classList.add('project-item');
-          projectDiv.setAttribute('data-text', project.name);
-          projectDiv.onclick=()=>{
-            const filteredTodos = todos.filter(todo => todo.projectID === project.id);
-            renderTodosCallback(filteredTodos);
-          }
-          sidebar.appendChild(projectDiv);
-       });
+  const clearTodoContent = () =>{
+    const todoContent = document.getElementById('todocontent');
+    todoContent.innerHTML='';
+  }
+
+  const defaultProject = document.createElement('div');
+  defaultProject.setAttribute('data-text', 'All todos');
+  defaultProject.classList.add('project-item');
+  defaultProject.onclick = () => {
+      removeActiveClass();
+      defaultProject.classList.add('active');
+      renderTodosCallback(todos);
+  };
+  sidebar.appendChild(defaultProject);
+
+  projects.forEach(project => {
+      const projectDiv = document.createElement('div');
+      projectDiv.classList.add('project-item');
+      projectDiv.setAttribute('data-text', project.name);
+      projectDiv.onclick = () => {
+          removeActiveClass();
+          clearTodoContent();
+          projectDiv.classList.add('active');
+          const filteredTodos = todos.filter(todo => todo.projectID === project.id);
+          renderTodosCallback(filteredTodos);
+      };
+      sidebar.appendChild(projectDiv);
+  });
 };
 
 
