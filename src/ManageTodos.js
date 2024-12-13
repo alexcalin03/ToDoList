@@ -1,6 +1,7 @@
 import Todo from "./models/Todo.js";
 
  export const fetchTodos = async(API_BASE) =>{
+    // try
     const response = await fetch(`${API_BASE}/Todo`);
     const data = await response.json();
     return data.map(todo => new Todo(
@@ -31,7 +32,7 @@ export const renderWholeTodo=(todo)=>{
     todos.forEach(todo => {
         const todoDiv = document.createElement('div');
         todoDiv.classList.add('todo-item');
-        todoDiv.textContent = `${todo.title} - ${todo.priority} (${todo.dueDate})`;
+        todoDiv.setAttribute('data-text', `${todo.title} - ${todo.priority} (${todo.dueDate})`);
         todoDiv.onclick=()=> renderWholeTodo(todo);
         content.appendChild(todoDiv);
     });
