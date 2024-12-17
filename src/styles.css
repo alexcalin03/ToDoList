@@ -143,6 +143,7 @@ h1:hover {
     padding: 10px;
     text-align:left;
     overflow-y: auto;
+    border-right: 1px solid #ccc;
 }
 
 /* Project item styles */

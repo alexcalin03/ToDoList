@@ -3,7 +3,7 @@
  
  export const fetchProjects = async(API_BASE) =>{
   //try
-    const response = await fetch(`${API_BASE}/Project`);
+    const response = await fetch(`${API_BASE}/projects/`);
     const data = await response.json();
     return data.map(project => new Project(project.id, project.name));
    
@@ -47,5 +47,3 @@ export const renderProjects = (projects, todos, renderTodosCallback) => {
       sidebar.appendChild(projectDiv);
   });
 };
-
-

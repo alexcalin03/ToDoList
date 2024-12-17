@@ -1,6 +1,9 @@
 import './styles.css';
 import { fetchProjects, renderProjects } from './ManageProjects.js';
 import { fetchTodos, renderTodos } from './ManageTodos.js';
+import { registerUser } from './api_requests.js';
+import { loginUser } from './api_requests.js';
+import { logoutUser } from './api_requests.js';
 console.log("Hello.Webpack");
 
 const menuIcon = document.getElementById('menu-icon');
@@ -15,18 +18,25 @@ document.addEventListener('click', (e) => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', async ()=>{
-    const API_BASE = 'https://6751ba8ed1983b9597b407f9.mockapi.io/api/v1';
-try{
-    const projects = await fetchProjects(API_BASE);
-    const todos = await fetchTodos(API_BASE);
-    renderProjects(projects, todos, renderTodos);
-    renderTodos(todos);
-}catch (error){console.error('Error initializing app', error);
 
-}
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // Step 1: Log in to get the token
+        console.log("Logging in...");
+        const result = await loginUser("testuser", "testpassword");
+        console.log("Login successful! Token:", result.token);
+
+        // Step 2: Call logout function
+        console.log("Logging out...");
+        await logoutUser();
+        console.log("Logout successful!");
+    } catch (error) {
+        console.error("Error during login or logout:", error);
+    }
+});
+
+
+
 
    
-}
 
-)
