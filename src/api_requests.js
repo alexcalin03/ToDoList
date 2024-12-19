@@ -30,12 +30,12 @@ export async function loginUser(username, password) {
     })
   });
   const data = await response.json();
+  console.log(data);
 
   if(response.ok)
   {
-    localStorage.setItem('authToken', data.token);
-    console.log('User logged in',data.token);
-    return data;
+    const token = data.token;
+    localStorage.setItem('authToken', token);
 
   }else{
     console.error('Error logging in user', data);
@@ -46,6 +46,8 @@ export async function loginUser(username, password) {
 
 export async function logoutUser() {
     const token = localStorage.getItem("authToken");
+    console.log("Token used for logout:", token);
+
 
     if (!token) {
         console.error("No token found. User is not logged in.");

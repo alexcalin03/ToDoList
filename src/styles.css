@@ -10,6 +10,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+
 }
 
 /* Header styles */
@@ -213,3 +214,67 @@ h1:hover {
     padding: 10px;
     overflow-y: auto;
 }
+
+/* Login form styles */
+
+.hidden{
+    display: none;
+}
+
+#login-app {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#todo-app {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+
+
+

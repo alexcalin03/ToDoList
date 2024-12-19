@@ -8,6 +8,7 @@ console.log("Hello.Webpack");
 
 const menuIcon = document.getElementById('menu-icon');
 const menu = document.getElementById('menu');
+const logoutButton = document.getElementById('logout-button');
 
 menuIcon.addEventListener('click', () => {
     menu.classList.toggle('show');
@@ -19,24 +20,28 @@ document.addEventListener('click', (e) => {
 });
 
 
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        // Step 1: Log in to get the token
-        console.log("Logging in...");
-        const result = await loginUser("testuser", "testpassword");
-        console.log("Login successful! Token:", result.token);
+document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('authToken');
 
-        // Step 2: Call logout function
-        console.log("Logging out...");
-        await logoutUser();
-        console.log("Logout successful!");
-    } catch (error) {
-        console.error("Error during login or logout:", error);
+    if (!token) {
+        window.location.href = 'login.html'; // Redirect to login if no token
+    } else {
+        console.log('User is logged in. Token:', token);
+        
+        // Proceed with showing the app
     }
+
+    logoutButton.addEventListener('click', async () => {
+        try {
+            await logoutUser();
+            window.location.href = 'login.html';
+        } catch (error) {
+            console.error('Error logging out user', error);
+            alert('Error logging out user');
+        }
+    });
+
 });
 
 
-
-
-   
-
+    
