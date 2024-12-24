@@ -13,7 +13,6 @@ const API_BASE = "http://127.0.0.1:8000"; // Backend URL
     })
   });
   const data = await response.json();
-  console.log(data);
   return data;
 }
 
@@ -30,7 +29,6 @@ export async function loginUser(username, password) {
     })
   });
   const data = await response.json();
-  console.log(data);
 
   if(response.ok)
   {
@@ -46,7 +44,6 @@ export async function loginUser(username, password) {
 
 export async function logoutUser() {
     const token = localStorage.getItem("authToken");
-    console.log("Token used for logout:", token);
 
 
     if (!token) {
@@ -64,7 +61,6 @@ export async function logoutUser() {
 
     if (response.ok) {
         localStorage.removeItem("authToken"); // Remove token from local storage
-        console.log("Logout successful!");
     } else {
         console.error("Failed to log out.");
     }
