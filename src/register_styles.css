@@ -1,3 +1,41 @@
+@font-face {
+    font-family: 'Gristela'; 
+    src: url('/src/resources/gristela.otf') format('opentype');
+} 
+
+
+header {
+    background-color: rgb(213, 125, 19);
+    color: whitesmoke;
+    padding: 10px;
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 
+        0 10px 12px rgba(0, 0, 0, 0.2), 
+        inset 0 4px 6px rgba(0, 0, 0, 0.1); 
+        border-radius: 10px;
+
+}
+
+.header-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+h1 {
+    font-family: 'Gristela';
+    font-size: 30px;
+    margin-left: 20px;
+}
+
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -38,7 +76,7 @@ input {
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    width: 300px;
+    width: 280px;
 }
 
 button {

@@ -41,6 +41,11 @@ export const populateEditTodoForm = (projects, todo) => {
     const projectDropdown = document.getElementById('edit-todo-project');
     projectDropdown.innerHTML = '';
 
+    const noneOption = document.createElement('option');
+    noneOption.value = ''; // Empty value for "None"
+    noneOption.textContent = 'None'; // Display text
+    projectDropdown.appendChild(noneOption);
+
     projects.forEach((project) => {
         const option = document.createElement('option');
         option.value = project.id; // Use project.id for the option value
@@ -51,7 +56,7 @@ export const populateEditTodoForm = (projects, todo) => {
     if (todo.project_id) {
         projectDropdown.value = todo.project_id; // Set the dropdown's value to the correct project ID
     } else {
-        console.warn('Todo does not have a valid project associated');
+        projectDropdown.value = ''; 
     }
     const titleInput = document.getElementById('edit-todo-title');
     const descriptionTextarea = document.getElementById('edit-todo-description');

@@ -1,6 +1,7 @@
 import './styles.css';
 import { fetchProjects, renderProjects, createProject, activeProjectId, deleteProject, editProject } from './ManageProjects.js';
 import { fetchTodos, renderTodos, addTodo, activeTodoId, deleteTodo, populateEditTodoForm , editTodo, renderWholeTodo} from './ManageTodos.js';
+import { fetchNotifications, renderNotifications, sendNotification, respondToNotification, updateNotificationCounter, markInformationalAsResponded } from './ManageNotifications.js';
 import { logoutUser } from './api_requests.js';
 
 console.log("Hello.Webpack");
@@ -75,6 +76,40 @@ document.addEventListener('DOMContentLoaded', async() => {
     const editTodoButton = document.getElementById('edit-todo-button');
     const closeEditTodoPopup = document.getElementById('close-edit-todo-popup');
     const editTodoForm = document.getElementById('edit-todo-form');
+    const notificationPopup = document.getElementById('notification-popup');
+    const notificationButton = document.getElementById('notification-button');
+    const closeNotificationPopup = document.getElementById('close-notification-popup');
+    const sendNotificationButton = document.getElementById('send-notification-button');
+    const sendNotificationForm = document.getElementById('send-notification-form');
+    const sendNotificationPopup = document.getElementById('send-notification-popup');
+    const closeSendNotificationPopup = document.getElementById('close-send-notification-popup');
+
+    sendNotificationButton.addEventListener('click', () => {
+        sendNotificationPopup.classList.remove('hidden');
+    });
+
+    closeSendNotificationPopup.addEventListener('click', () => {
+        sendNotificationPopup.classList.add('hidden');
+    });
+
+    notificationButton.addEventListener('click', async () => {
+        notificationPopup.classList.remove('hidden');
+        await markInformationalAsResponded(API_BASE);
+    });
+
+    closeNotificationPopup.addEventListener('click',async () => {
+        notificationPopup.classList.add('hidden');
+        const notifications = await fetchNotifications(API_BASE);
+        renderNotifications(notifications);
+        updateNotificationCounter(notifications);
+    });
+
+    notificationPopup.addEventListener('click', (e) => {
+        if (!e.target.closest('.popup-content')) {
+            notificationPopup.classList.add('hidden');
+        }
+    });
+
 
     editProjectButton.addEventListener('click', () => {
         editProjectPopup.classList.remove('hidden');
@@ -164,15 +199,21 @@ document.addEventListener('DOMContentLoaded', async() => {
     try{
         const projects = await fetchProjects(API_BASE);
         const todos = await fetchTodos(API_BASE);
+        console.log(token);
         renderProjects(projects, todos, renderTodos);
         renderTodos(todos);
+        const notifications = await fetchNotifications(API_BASE);
+        console.log(notifications);
+        renderNotifications(notifications);
+        updateNotificationCounter(notifications);
+
 
         updateUIState();
 
 
     }catch(error){
-        console.error('Error fetching projects and todos', error);
-        alert('Error fetching projects and todos');
+        console.error('Error fetching projects, todos or notifications', error);
+        alert('Error fetching projects, todos or notifications');
     };
 
     logoutButton.addEventListener('click', async () => {
@@ -276,8 +317,10 @@ document.addEventListener('DOMContentLoaded', async() => {
             await editTodo(API_BASE, activeTodoId, updatedTodo);
             const todos = await fetchTodos(API_BASE);
             const currentTodo = todos.find((t) => t.id === activeTodoId);
+            const projects = await fetchProjects(API_BASE);
             
             renderTodos(todos);
+            renderProjects(projects, todos, renderTodos);
     
             if (currentTodo) {
                 renderWholeTodo(currentTodo);
@@ -289,6 +332,34 @@ document.addEventListener('DOMContentLoaded', async() => {
         } catch (error) {
             console.error('Error editing todo', error);
             alert('Error editing todo');
+        }
+    });
+
+    sendNotificationForm.addEventListener('submit', async (e) =>{
+        e.preventDefault();
+
+        // Gather data from form fields
+        const title = document.getElementById('send-todo-title').value;
+        const description = document.getElementById('send-todo-description').value;
+        const due_date = document.getElementById('send-todo-due-date').value;
+        const priority = document.getElementById('send-todo-priority').value;
+        const recipient = document.getElementById('send-todo-user').value;
+
+        const notificationPayload = {
+            title,
+            description,
+            due_date,
+            priority,
+            recipient,
+        };
+
+        try {
+            const response = await sendNotification(API_BASE, notificationPayload);
+            alert('Notification sent successfully!');
+            sendNotificationPopup.classList.add('hidden');
+        } catch (error) {
+            console.error('Error sending notification:', error);
+            alert('Error sending notification. Please try again.');
         }
     });
     

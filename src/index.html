@@ -12,8 +12,12 @@
     <header>
         <div class="header-content">
             <h1>Taskify</h1>
-            <div class="notification-icon">
+            <div class="send-notification" id="send-notification-button">
+                <i class="fas fa-paper-plane"></i>
+            </div>
+            <div class="notification-icon" id="notification-button">
                 <i class="fas fa-bell"></i>
+                <span class ="notification-counter hidden" id="notification-counter">0</span>
             </div>
             <div class="menu-icon" id="menu-icon">
                 &#9776; <!-- Unicode for sandwich menu -->
@@ -137,6 +141,51 @@
             <button type="button" id="close-edit-todo-popup">Cancel</button>
         </form>
     </div>
+
+</div>
+
+<!-- Pop up for notifications -->
+<div id="notification-popup" class="popup hidden">
+    <div class="popup-content">
+        <button id="close-notification-popup" class="close-button">&times;</button>
+        <h3>Notifications</h3>
+        <div id="notification-list">
+            <!-- List items will be dynamically populated -->
+        </div>
+        
+    </div>
+
+</div>
+
+<div id="send-notification-popup" class="popup hidden">
+    <div class="popup-content">
+        <h3>Send Todo Notification</h3>
+        <form id="send-notification-form">
+            <label for="send-todo-title">Title:</label>
+            <input type="text" id="send-todo-title" name="send-todo-title" required>
+
+            <label for="send-todo-description">Description:</label>
+            <textarea id="send-todo-description" name="send-todo-description" required></textarea>
+
+            <label for="send-todo-due-date">Due Date:</label>
+            <input type="date" id="send-todo-due-date" name="send-todo-due-date" required>
+
+            <label for="send-todo-priority">Priority:</label>
+            <select id="send-todo-priority" name="send-todo-priority" required>
+                <option value="LOW">Low</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HIGH">High</option>
+            </select>
+
+            <label for="send-todo-user">Send To:</label>
+            <input type="text" id="send-todo-user" name="send-todo-user" required>
+
+            <button type="submit">Send Notification</button>
+            <button type="button" id="close-send-notification-popup">Cancel</button>
+        </form>
+    </div>
+</div>
+
 
 
 </body>

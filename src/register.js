@@ -2,6 +2,7 @@ import './register_styles.css';
 import { registerUser } from "./api_requests.js";
 document.addEventListener("DOMContentLoaded", () => {
      const registerForm = document.getElementById("register-form");
+        const loginLink = document.getElementById("login-link");
 
      registerForm.addEventListener("submit", async (e) => {
          e.preventDefault();
@@ -15,5 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
              console.error("Error registering user", error);
              alert("Error registering user");
          }
+     });
+
+     loginLink.addEventListener("click", (e) => {
+         e.preventDefault();
+         window.location.href = "login.html";
      });
 });
