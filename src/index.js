@@ -1,7 +1,7 @@
 import './styles.css';
 import { fetchProjects, renderProjects, createProject, activeProjectId, deleteProject, editProject } from './ManageProjects.js';
 import { fetchTodos, renderTodos, addTodo, activeTodoId, deleteTodo, populateEditTodoForm , editTodo, renderWholeTodo} from './ManageTodos.js';
-import { fetchNotifications, renderNotifications, sendNotification, respondToNotification, updateNotificationCounter, markInformationalAsResponded } from './ManageNotifications.js';
+import { fetchNotifications, renderNotifications, sendNotification, respondToNotification, updateNotificationCounter, markInformationalAsResponded, markAllAsCleared } from './ManageNotifications.js';
 import { logoutUser } from './api_requests.js';
 
 console.log("Hello.Webpack");
@@ -10,6 +10,7 @@ const API_BASE = "http://127.0.0.1:8000";
 const menuIcon = document.getElementById('menu-icon');
 const menu = document.getElementById('menu');
 const logoutButton = document.getElementById('logout-button');
+const accountButton = document.getElementById('account-button');
 
 menuIcon.addEventListener('click', () => {
     menu.classList.toggle('show');
@@ -83,6 +84,7 @@ document.addEventListener('DOMContentLoaded', async() => {
     const sendNotificationForm = document.getElementById('send-notification-form');
     const sendNotificationPopup = document.getElementById('send-notification-popup');
     const closeSendNotificationPopup = document.getElementById('close-send-notification-popup');
+    const clearNotificationsButton = document.getElementById('clear-notifications');
 
     sendNotificationButton.addEventListener('click', () => {
         sendNotificationPopup.classList.remove('hidden');
@@ -95,6 +97,12 @@ document.addEventListener('DOMContentLoaded', async() => {
     notificationButton.addEventListener('click', async () => {
         notificationPopup.classList.remove('hidden');
         await markInformationalAsResponded(API_BASE);
+    });
+
+    clearNotificationsButton.addEventListener('click', async () => {
+        await markAllAsCleared(API_BASE);
+        const updatedNotifications = await fetchNotifications(API_BASE);
+        await renderNotifications(updatedNotifications);
     });
 
     closeNotificationPopup.addEventListener('click',async () => {
@@ -224,6 +232,10 @@ document.addEventListener('DOMContentLoaded', async() => {
             console.error('Error logging out user', error);
             alert('Error logging out user');
         }
+    });
+
+    accountButton.addEventListener('click', (e) => {
+        window.location.href = 'account.html';
     });
 
     addProjectForm.addEventListener('submit', async (e) => {

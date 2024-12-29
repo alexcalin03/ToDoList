@@ -65,3 +65,28 @@ export async function logoutUser() {
         console.error("Failed to log out.");
     }
 }
+
+export const updatePassword = async (API_BASE ,oldPassword, newPassword) => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    const response = await fetch(`${API_BASE}/update_password/`, {
+        method: 'PUT',
+        headers: {
+            "Authorization": `Token ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            old_password: oldPassword,
+            new_password: newPassword,
+        }),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error changing password');
+    }
+};
+

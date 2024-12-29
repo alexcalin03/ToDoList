@@ -44,9 +44,10 @@ export const renderNotifications = (notifications) =>{
     const notificationPopup = document.getElementById('notification-popup');
     const notificationList = document.getElementById('notification-list');
     notificationList.innerHTML = '';
-    if (notifications.length === 0){
+    console.log('Notifications:', notifications);
+    if (notifications.every(notification => notification.status === 'Cleared')){
         const noNotifications = document.createElement('p');
-        noNotifications.textContent = 'No notifications';
+        noNotifications.textContent = 'No notifications at the moment.';
         notificationList.appendChild(noNotifications);
         return;
     };
@@ -73,7 +74,7 @@ export const renderNotifications = (notifications) =>{
             notificationItem.innerHTML = `
                 <p>${notification.message}</p>
             `;
-        }
+        } 
     
         notificationList.appendChild(notificationItem);
     });
@@ -211,6 +212,28 @@ export const markInformationalAsResponded = async (API_BASE) => {
     if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Error marking informational notifications as responded');
+    }
+
+    return await response.json();
+};
+
+export const markAllAsCleared = async (API_BASE) => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    const response = await fetch(`${API_BASE}/mark_all_as_cleared/`, {
+        method: 'POST',
+        headers: {
+            "Authorization": `Token ${token}`,
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error marking all notifications as cleared');
     }
 
     return await response.json();

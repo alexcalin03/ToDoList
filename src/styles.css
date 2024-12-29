@@ -120,7 +120,7 @@ h1 {
 }
 
 h1:hover {
-    transform: scale(1.3,1.3);
+    transform: scale(1.1,1.1);
 }
 
 /* Container styles */
@@ -481,6 +481,22 @@ button:hover {
 
 .close-button:hover {
     color: #ff0000; 
+    background-color: transparent;
+}
+
+.clear-button {
+    position: absolute;
+    top: 18px;
+    right: 75px;
+    background: none;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    color: #333;
+}
+
+.clear-button:hover {
+    color: #a2830a;
     background-color: transparent;
 }
 

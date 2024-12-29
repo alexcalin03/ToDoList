@@ -26,7 +26,7 @@
         </div>
         <nav class="menu" id="menu">
             <ul>
-                <li><a href="#account">Account</a></li>
+                <li><a href="#account" id="account-button">Account</a></li>
                 <li><a href="#logout" id="logout-button">Log out</a></li>
             </ul>
         </nav>
@@ -82,7 +82,11 @@
             <label for="todo-due-date">Due Date:</label>
             <input type="date" id="todo-due-date" name="todo-due-date" required>
             <label for="todo-priority">Priority:</label>
-            <input type="text" id="todo-priority" name="todo-priority" required>
+            <select id="todo-priority" name="todo-priority" required>
+                <option value="LOW">Low</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HIGH">High</option>
+            </select>
             <button type="submit">Add Todo</button>
             <button type="button" id="close-todo-popup">Cancel</button>
         </form>
@@ -132,7 +136,11 @@
             <label for="edit-todo-due-date">New Due Date:</label>
             <input type="date" id="edit-todo-due-date" name="edit-todo-due-date" >
             <label for="edit-todo-priority">New Priority:</label>
-            <input type="text" id="edit-todo-priority" name="edit-todo-priority" >
+            <select id="edit-todo-priority" name="edit-todo-priority" required>
+                <option value="LOW">Low</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HIGH">High</option>
+            </select>
             <label for="edit-todo-project">Move to Project:</label>
             <select id="edit-todo-project" name="edit-todo-project">
                 <!-- Options will be dynamically populated -->
@@ -147,6 +155,7 @@
 <!-- Pop up for notifications -->
 <div id="notification-popup" class="popup hidden">
     <div class="popup-content">
+        <button id="clear-notifications" class="clear-button">clear</button>
         <button id="close-notification-popup" class="close-button">&times;</button>
         <h3>Notifications</h3>
         <div id="notification-list">

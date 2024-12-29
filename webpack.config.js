@@ -7,6 +7,7 @@ module.exports = {
         main: './src/index.js', // Entry file for the app
         login: './src/login.js', // Entry file for the login page
         register: './src/register.js', // Entry file for the register page
+        account: './src/account.js', // Entry file for the account page
     },
     output: {
         filename: '[name].bundle.js', // Output file name
@@ -36,6 +37,11 @@ module.exports = {
             filename: 'register.html',
             template: './src/register.html',
             chunks: ['register'], // Specify the chunks to include
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'account.html',
+            template: './src/account.html',
+            chunks: ['account'], // Specify the chunks to include
         }),
         
     ],
